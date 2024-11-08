@@ -19,15 +19,15 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
       <Navbar/>
 
         {/* Hero Content */}
-        <div className="max-w-7xl mx-auto pt-20 px-6">
-          <div className="text-center max-w-4xl mx-auto">
+        <div className=" max-w-[1600px] mx-auto pt-40 px-6">
+          <div className="text-center mx-auto">
             <h1 className="text-7xl md:text-8xl font-bold text-white mb-8" style={{ lineHeight: '1.2' }}>
               AI Patient Simulations for<br/>
               Smarter Clinical Training
             </h1>
-            <p className="text-gray-200 max-w-3xl mx-auto mb-16" style={{
+            <p className="text-gray-200 mx-auto mb-16 max-w-[1385px]" style={{
               fontFamily: 'Helvetica, Arial, sans-serif',
-              fontSize: '42px',
+              fontSize: '31px',
               fontWeight: '400',
               lineHeight: '63px'
             }}>
