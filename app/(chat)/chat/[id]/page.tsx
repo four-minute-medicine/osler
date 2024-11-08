@@ -10,7 +10,7 @@ interface Conversation {
   _id: string;
   title: string;
   messages: string[];
-  user: any[]; // Update based on your user structure
+  user: string[]; // Update based on your user structure
   __v: number;
 }
 

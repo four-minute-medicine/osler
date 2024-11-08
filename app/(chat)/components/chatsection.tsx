@@ -40,7 +40,6 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
 };
 
 const ChatSection: React.FC<ChatSectionProps> = ({ 
-  conversation, 
   messages = [], 
   onSendMessage, 
   onNewCase 

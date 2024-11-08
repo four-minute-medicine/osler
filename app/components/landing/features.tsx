@@ -1,6 +1,7 @@
-import Image from 'next/image';
+'use client'
 import React from 'react';
-
+import Image from 'next/image';
+import laptop from '../../assets/laptop.png'
 interface FeatureCardProps {
   title: string;
   description: string;
@@ -8,43 +9,48 @@ interface FeatureCardProps {
 }
 
 const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, className }) => {
-    return (
-      <div className={`relative rounded-3xl  p-8 min-h-[500px] flex flex-col ${className}`}         style={{
+  return (
+    <div 
+      className={`relative rounded-3xl p-8 min-h-[500px] flex flex-col ${className}`} 
+      style={{
         background: 'linear-gradient(180deg, rgba(10, 10, 10, 1) 10%, rgba(192, 190, 190, 0.9) 100%)'
-      }}>
-        {/* Content */}
-        <div className="mb-auto">
-          <h3 className="text-white text-3xl md:text-4xl font-bold mb-6">
-            {title}
-          </h3>
-          <p className="text-white/80 text-lg md:text-xl leading-relaxed">
-            {description}
-          </p>
-        </div>
-  
-        {/* Laptop Image */}
-        <div className="mt-8">
-          <div className="relative aspect-[16/9] w-full">
-            <img 
-              src="https://s3-alpha-sig.figma.com/img/5c2f/8320/1247faa6f74322102d3508c9e3c4f3dc?Expires=1731888000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=mGci6c~7RIxUkiZaxS7UvoPhpLHhgV262HJeYgtEibNYl6WspkjJv7W9ETehZRGoHufzflAjt~uYd-fxcCHRAEkhhex8xo54wpyNdtOJM54PUW4Bs3iP9B7xruMEmduBdzZbSSxQMGn3oYuqBvteW~5YOFnWXDQ3wZwZAiSffJHGI2FssXDwSAxmxVXPMzL4d-s8tlHi4lNPUYtT7XMadwJ1oEgf~TOegEgCRq2Jjo-jYXTmzrlSbn~mSrz61E55HZDdfQ1BgB7rbXSPuU8FQtMJBo1QTj-QU8w6Wa-ozGmn~mELbqFBKcPN~eQY9OFlihXtrOFch13QBk3n52iJgA__"
-              alt="Feature illustration"
-              className="w-full h-full object-cover rounded-lg"
-            />
-            {/* Reflection Effect */}
-            <div className="absolute inset-0 rounded-lg bg-gradient-to-b from-transparent to-white/10 mix-blend-overlay" />
-          </div>
-        </div>
-  
-        {/* Gradient Border Effect */}
-        <div className="absolute inset-0 rounded-3xl -z-10 p-[1px] bg-gradient-to-b from-white/15 to-transparent">
-          <div className="absolute inset-0 rounded-3xl bg-[#0A0A0A]" />
-        </div>
-  
-        {/* Card Glow Effect */}
-        <div className="absolute -z-20 inset-0 rounded-3xl opacity-20 blur-xl bg-radial-gradient" />
+      }}
+    >
+      {/* Content */}
+      <div className="mb-auto">
+        <h3 className="text-white text-3xl md:text-4xl font-bold mb-6">
+          {title}
+        </h3>
+        <p className="text-white/80 text-lg md:text-xl leading-relaxed">
+          {description}
+        </p>
       </div>
-    );
-  };
+
+      {/* Laptop Image */}
+      <div className="mt-8">
+        <div className="relative aspect-[16/9] w-full">
+          <Image
+            src={laptop}
+            alt="Feature illustration"
+            fill
+            className="rounded-lg object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+          {/* Reflection Effect */}
+          <div className="absolute inset-0 rounded-lg bg-gradient-to-b from-transparent to-white/10 mix-blend-overlay" />
+        </div>
+      </div>
+
+      {/* Gradient Border Effect */}
+      <div className="absolute inset-0 rounded-3xl -z-10 p-[1px] bg-gradient-to-b from-white/15 to-transparent">
+        <div className="absolute inset-0 rounded-3xl bg-[#0A0A0A]" />
+      </div>
+
+      {/* Card Glow Effect */}
+      <div className="absolute -z-20 inset-0 rounded-3xl opacity-20 blur-xl bg-radial-gradient" />
+    </div>
+  );
+};
 
 interface Feature {
   id: string;
@@ -76,16 +82,10 @@ const FeaturesSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <div className="text-center mb-20">
-          <span 
-            className="text-sm tracking-[0.3em] uppercase mb-4 text-white/70 block"
-            style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
-          >
+          <span className="text-sm tracking-[0.3em] uppercase mb-4 text-white/70 block font-helvetica">
             Features
           </span>
-          <h2 
-            className="text-white text-5xl md:text-6xl font-bold"
-            style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
-          >
+          <h2 className="text-white text-5xl md:text-6xl font-bold font-helvetica">
             How Osler works
           </h2>
         </div>
