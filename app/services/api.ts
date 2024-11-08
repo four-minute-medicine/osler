@@ -1,59 +1,33 @@
+import { ConversationResponse, CreateConversationResponse, HistoryConversation, MessageResponse } from "../(chat)/types/chat";
+
 const API_BASE_URL = 'https://fourmm-llama-hackathon-backend.onrender.com/api';
 
 export const chatApi = {
-  // Create a new conversation
-  createConversation: async (question: string) => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/conversation`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ question }),
-      });
-      return await response.json();
-    } catch (error) {
-      console.error('Error creating conversation:', error);
-      throw error;
-    }
+  getConversations: async (): Promise<{ conversations: HistoryConversation[] }> => {
+    const response = await fetch(`${API_BASE_URL}/conversation`);
+    return await response.json();
   },
 
-  // Continue conversation (send message)
-  continueConversation: async (conversationId: string, message: string) => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/conversation/${conversationId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ question: message }),
-      });
-      return await response.json();
-    } catch (error) {
-      console.error('Error continuing conversation:', error);
-      throw error;
-    }
+  getConversationHistory: async (id: string): Promise<ConversationResponse> => {
+    const response = await fetch(`${API_BASE_URL}/conversation/${id}`);
+    return await response.json();
   },
 
-  // Get all conversations
-  getConversations: async () => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/conversation`);
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching conversations:', error);
-      throw error;
-    }
+  continueConversation: async (id: string, message: string): Promise<MessageResponse> => {
+    const response = await fetch(`${API_BASE_URL}/conversation/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question: message }),
+    });
+    return await response.json();
   },
 
-  // Get conversation history
-  getConversationHistory: async (conversationId: string) => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/conversation/${conversationId}`);
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching conversation history:', error);
-      throw error;
-    }
+  createNewCase: async (message: string): Promise<CreateConversationResponse> => {
+    const response = await fetch(`${API_BASE_URL}/conversation`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question: message }),
+    });
+    return await response.json();
   },
 };
