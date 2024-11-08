@@ -25,7 +25,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, className
         {/* Laptop Image */}
         <div className="mt-8">
           <div className="relative aspect-[16/9] w-full">
-            <Image 
+            <img 
               src="https://s3-alpha-sig.figma.com/img/5c2f/8320/1247faa6f74322102d3508c9e3c4f3dc?Expires=1731888000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=mGci6c~7RIxUkiZaxS7UvoPhpLHhgV262HJeYgtEibNYl6WspkjJv7W9ETehZRGoHufzflAjt~uYd-fxcCHRAEkhhex8xo54wpyNdtOJM54PUW4Bs3iP9B7xruMEmduBdzZbSSxQMGn3oYuqBvteW~5YOFnWXDQ3wZwZAiSffJHGI2FssXDwSAxmxVXPMzL4d-s8tlHi4lNPUYtT7XMadwJ1oEgf~TOegEgCRq2Jjo-jYXTmzrlSbn~mSrz61E55HZDdfQ1BgB7rbXSPuU8FQtMJBo1QTj-QU8w6Wa-ozGmn~mELbqFBKcPN~eQY9OFlihXtrOFch13QBk3n52iJgA__"
               alt="Feature illustration"
               className="w-full h-full object-cover rounded-lg"
