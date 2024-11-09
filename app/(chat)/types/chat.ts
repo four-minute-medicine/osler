@@ -1,23 +1,55 @@
-export interface Conversation {
-    _id: string;
-    title: string;
-    messages: string[];
+export interface HistoryConversation {
+  _id: string;
+  title: string;
+  user: string[];
+  messages: string[];
+  __v: number;
+  timestamp: string;
+}
+
+export interface CurrentConversation {
+  _id: string;
+  title: string;
+  user: string[];
+  messages: string[];
+  __v: number;
+  timestamp: string;
+}
+
+export interface ConversationMessage {
+  _id: string;
+  user_prompt: string;
+  user_type: 'student' | 'assistant';
+  conversation: string;
+  __v: number;
+}
+
+export interface ApiMessage {
+  user_type: 'student' | 'assistant';
+  message: string;
+}
+
+export interface ConversationResponse {
+  conversation: CurrentConversation;
+  messages: ConversationMessage[];
+}
+
+export interface MessageResponse {
+  messages: ApiMessage[];
+}
+
+export interface CreateConversationResponse {
+  conversationId:string;
+  messages: ApiMessage[];
+}
+  export interface ChatSectionProps {
+    messages: Message[];
+    onSendMessage: (message: string) => Promise<void>;
+    onNewCase: () => Promise<void>;
+    isGeneratingCase?: boolean;
   }
-  
   export interface Message {
-    _id: string;
-    user_prompt: string;
     user_type: 'student' | 'assistant';
-    conversation: string;
+    message: string;  // Changed from user_prompt to message
   }
   
-export interface MessageBubbleProps {
-    message: Message;
-  }
-  
-export interface ChatSectionProps {
-    conversation?: Conversation;
-    messages?: Message[];
-    onSendMessage?: (message: string) => Promise<void>; // Updated to handle async
-    onNewCase?: () => void;
-  }

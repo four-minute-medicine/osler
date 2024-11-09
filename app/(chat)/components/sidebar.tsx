@@ -16,7 +16,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   // Helper function to format and truncate title
   const formatTitle = (title: string) => {
-    if (!title.trim()) return "New Conversation";
+    if (title ==undefined ||!title.trim()) return "New Conversation";
     if (title.endsWith('...')) return title;
     return title.length > 20 ? `${title.substring(0, 20)}...` : title;
   };

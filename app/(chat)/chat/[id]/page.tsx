@@ -2,23 +2,41 @@
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { chatApi } from '@/app/services/api';
-import { Message } from '../../types/chat';
 import Sidebar from '../../components/sidebar';
 import ChatSection from '../../components/chatsection';
+
+interface Message {
+  user_type: 'student' | 'assistant';
+  message: string;
+}
 
 interface Conversation {
   _id: string;
   title: string;
   messages: string[];
-  user: string[]; // Update based on your user structure
+  user: string[];
   __v: number;
+  timestamp: string;
+}
+
+interface ConversationMessage {
+  _id: string;
+  user_prompt: string;
+  user_type: 'student' | 'assistant';
+  conversation: string;
+  __v: number;
+}
+
+interface MessageResponse {
+  messages: Message[];
 }
 
 export default function ChatPage() {
   const params = useParams();
   const router = useRouter();
   const [conversations, setConversations] = useState<Conversation[]>([]);
-  const [currentMessages, setCurrentMessages] = useState<Message[]>([]);
+  const [messages, setCurrentMessages] = useState<Message[]>([]);
+  const [isGeneratingCase, setIsGeneratingCase] = useState(false);
 
   // Fetch all conversations for sidebar
   useEffect(() => {
@@ -40,7 +58,13 @@ export default function ChatPage() {
       if (params.id) {
         try {
           const data = await chatApi.getConversationHistory(params.id as string);
-          setCurrentMessages(data.messages);
+          // Map ConversationMessage to Message
+          setCurrentMessages(
+            data.messages.map((msg: ConversationMessage) => ({
+              user_type: msg.user_type,
+              message: msg.user_prompt
+            }))
+          );
         } catch (error) {
           console.error('Error fetching messages:', error);
         }
@@ -50,61 +74,57 @@ export default function ChatPage() {
     fetchMessages();
   }, [params.id]);
 
-  const handleNewSession = async () => {
+  const handleSendMessage = async (message: string) => {
+    if (!params.id) return;
+
     try {
-      const initialMessage = "Hi there";
-      const data = await chatApi.createConversation(initialMessage);
-      router.push(`/chat/${data.conversation._id}`);
-      // Refresh conversations list
-      const updatedData = await chatApi.getConversations();
-      setConversations(updatedData.conversations);
+      const data: MessageResponse = await chatApi.continueConversation(
+        params.id as string,
+        message
+      );
+
+      if (data.messages && data.messages.length > 0) {
+        setCurrentMessages((prev) => [...prev, ...data.messages]);
+      }
     } catch (error) {
-      console.error('Error creating new conversation:', error);
+      console.error('Error sending message:', error);
     }
   };
 
-  const handleSearch = async (query: string) => {
-    // Implement search functionality
-    console.log('Searching:', query);
-  };
-
-  const handleClearHistory = async () => {
-    // Implement clear history functionality
-    console.log('Clearing history');
+  const handleNewCase = async () => {
+    setIsGeneratingCase(true);
+    try {
+      const data = await chatApi.createNewCase('ready');
+      if (data.conversationId) {
+        router.push(`/chat/${data.conversationId}`);
+        // Refresh conversations list
+        const updatedData = await chatApi.getConversations();
+        setConversations(updatedData.conversations);
+      }
+    } catch (error) {
+      console.error('Error creating new case:', error);
+    } finally {
+      setIsGeneratingCase(false);
+    }
   };
 
   const handleSelectConversation = (id: string) => {
     router.push(`/chat/${id}`);
   };
 
-  const handleSendMessage = async (message: string) => {
-    if (!params.id) return;
-
-    try {
-      const data = await chatApi.continueConversation(params.id as string, message);
-      setCurrentMessages(prev => [...prev, data.message]);
-      return data;
-    } catch (error) {
-      console.error('Error sending message:', error);
-      throw error;
-    }
-  };
-
   return (
-    <div className="flex h-screen bg-[#090909] w-screen">
+    <div className="flex h-screen bg-[#090909]">
       <Sidebar
         conversations={conversations}
-        onNewSession={handleNewSession}
-        onSearch={handleSearch}
-        onClearHistory={handleClearHistory}
+        onNewSession={handleNewCase}
         onSelectConversation={handleSelectConversation}
         activeConversationId={params.id as string}
       />
       <ChatSection
-        conversation={conversations.find(c => c._id === params.id)}
-        messages={currentMessages}
+        messages={messages}
         onSendMessage={handleSendMessage}
-        onNewCase={handleNewSession}
+        onNewCase={handleNewCase}
+        isGeneratingCase={isGeneratingCase}
       />
     </div>
   );
