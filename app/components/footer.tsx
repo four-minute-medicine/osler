@@ -1,3 +1,9 @@
+'use client'
+import React from 'react';
+import { Baloo_Bhai_2 } from 'next/font/google';
+
+const balooBhai = Baloo_Bhai_2({ subsets: ['latin'] });
+
 interface FooterLinkProps {
   href: string;
   children: React.ReactNode;
@@ -6,7 +12,7 @@ interface FooterLinkProps {
 const FooterLink: React.FC<FooterLinkProps> = ({ href, children }) => (
   <a
     href={href}
-    className="text-emerald-700 hover:text-emerald-900 transition-colors"
+    className="text-gray-400 hover:text-white transition-colors"
   >
     {children}
   </a>
@@ -14,18 +20,24 @@ const FooterLink: React.FC<FooterLinkProps> = ({ href, children }) => (
 
 const Footer: React.FC = () => {
   return (
-    <footer className="absolute bottom-0 w-full py-8 bg-gradient-to-t from-emerald-100/50 to-transparent">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="w-full h-px bg-emerald-200/30" />
-      </div>
+    <footer className="absolute bottom-0 w-full py-8 bg-black">
       <div className="max-w-7xl mx-auto pt-6 px-4 sm:px-6">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           {/* Logo */}
-          <div className="text-emerald-950 text-2xl font-bold">
-          BrightStart
+          <div 
+            className={`text-white ${balooBhai.className}`}
+            style={{
+              fontSize: '30px',
+              fontWeight: 400,
+              lineHeight: '25px',
+              textAlign: 'center',
+              textUnderlinePosition: 'from-font',
+              textDecorationSkipInk: 'none'
+            }}
+          >            BrightStart
           </div>
           {/* Copyright */}
-          <div className="text-emerald-700 text-sm">
+          <div className="text-gray-400 text-sm">
             Copyright © 2023 Four Minute Medicine (PTY) LTD. All rights reserved.
           </div>
           {/* Links */}

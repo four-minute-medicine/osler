@@ -1,148 +1,88 @@
 'use client'
 import React from 'react';
-import { Brain, Activity, BookOpen } from 'lucide-react';
+import Image from 'next/image';
+import vector from '../../assets/vector 2.png';
 
 interface FeatureCardProps {
   title: string;
   description: string;
-  icon: React.ReactNode;
-  gradient: string;
-  className?: string;
-}
-interface Feature {
-  id:string;
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-  gradient: string;
+  bgColor: string;
   className?: string;
 }
 
-const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, icon, gradient, className }) => {
+const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, bgColor, className }) => {
   return (
     <div
-      className={`relative rounded-3xl p-8 min-h-[500px] flex flex-col group ${className}`}
+      className={`relative rounded-[32px] p-12 min-h-[500px] justify-center flex flex-col ${className}`}
       style={{
-        background: gradient
+        backgroundColor: bgColor
       }}
     >
-      {/* Content */}
-      <div className="mb-8">
-        <h3 className="text-white text-3xl md:text-4xl font-bold mb-6">
-          {title}
-        </h3>
-        <p className="text-white/90 text-lg md:text-xl leading-relaxed">
-          {description}
-        </p>
-      </div>
-
-      {/* Interactive Visual Area */}
-      <div className="mt-auto relative group-hover:transform group-hover:scale-105 transition-all duration-500">
-        {/* Icon Container */}
-        <div className="relative h-48 flex items-center justify-center">
-          {/* Animated Background */}
-          <div className="absolute inset-0 bg-white/10 rounded-2xl backdrop-blur-sm" />
-          
-          {/* Main Icon */}
-          <div className="relative transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
-            {icon}
-          </div>
-
-          {/* Animated Dots */}
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute h-2 w-2 bg-white rounded-full animate-ping" 
-              style={{ top: '20%', left: '20%', animationDelay: '0s' }} />
-            <div className="absolute h-2 w-2 bg-white rounded-full animate-ping" 
-              style={{ top: '70%', left: '80%', animationDelay: '0.5s' }} />
-            <div className="absolute h-2 w-2 bg-white rounded-full animate-ping" 
-              style={{ top: '80%', left: '30%', animationDelay: '1s' }} />
-          </div>
-
-          {/* Connection Lines */}
-          <div className="absolute inset-0">
-            <svg className="w-full h-full" style={{ opacity: 0.2 }}>
-              <path d="M 20 20 L 180 180" stroke="white" strokeWidth="1" />
-              <path d="M 180 20 L 20 180" stroke="white" strokeWidth="1" />
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      {/* Card Border and Glow */}
-      <div className="absolute inset-0 rounded-3xl -z-10 p-[1px] bg-gradient-to-b from-white/30 to-transparent">
-        <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-white/5 to-transparent" />
-      </div>
-      <div className="absolute -z-20 inset-0 rounded-3xl opacity-20 blur-xl bg-white" />
-      
-      {/* Playful corner decorations */}
-      <div className="absolute top-4 left-4 w-12 h-12 border-t-4 border-l-4 border-white/20 rounded-tl-xl" />
-      <div className="absolute bottom-4 right-4 w-12 h-12 border-b-4 border-r-4 border-white/20 rounded-br-xl" />
+      <h3 className="text-black text-center text-2xl font-bold mb-8 uppercase tracking-wide" style={{ fontFamily: 'Inter, sans-serif' }}>
+        {title}
+      </h3>
+      <p className="text-gray-700 text-xl text-center leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
+        {description}
+      </p>
     </div>
   );
 };
 
-const features: (Feature & { icon: React.ReactNode; gradient: string })[] = [
+const features = [
   {
-    id: 'patient-simulations',
-    title: 'Patient Simulations',
-    description: 'Diagnose and treat virtual clinical cases, receiving feedback to sharpen clinical decision-making.',
-    icon: <Brain className="w-24 h-24 text-white" strokeWidth={1.5} />,
-    gradient: 'linear-gradient(45deg, #FF6B6B 0%, #FFB88C 100%)'
+    id: 'parent-queries',
+    title: 'Parent Queries',
+    description: 'Easily ask your medical questions and find crucial information from the Road to Health Book.',
+    bgColor: '#FFE5EC'
   },
   {
-    id: 'adaptive-quizzing',
-    title: 'Adaptive Quizzing',
-    description: 'Reinforce knowledge through scenario-based quizzes that encourage critical thinking.',
-    icon: <Activity className="w-24 h-24 text-white" strokeWidth={1.5} />,
-    gradient: 'linear-gradient(45deg, #4ECDC4 0%, #556270 100%)'
+    id: 'healthcare-workers',
+    title: 'Healthcare Workers Queries',
+    description: 'Quickly access and reference both the Child Road to Health Book and IMCI guidelines and make informed decisions with AI-powered insights.',
+    bgColor: '#E5F4F0'
   },
   {
-    id: 'tailored-explanations',
-    title: 'Tailored Explanations',
-    description: 'Get tailored content explanations to deepen understanding of complex topics.',
-    icon: <BookOpen className="w-24 h-24 text-white" strokeWidth={1.5} />,
-    gradient: 'linear-gradient(45deg, #A770EF 0%, #CF8BF3 50%, #FDB99B 100%)'
+    id: 'training',
+    title: 'Training',
+    description: 'Benefit from AI-driven patient simulations to hone your skills in early childhood health.',
+    bgColor: '#F0EBE5'
   }
 ];
 
 const FeaturesSection: React.FC = () => {
   return (
-    <section className="w-full py-32 relative">
-      {/* Background with animated gradient */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: 'radial-gradient(77.11% 58.88% at 50% 50%, #FFE5E5 0%, #FFF3E0 25%, #E8FFF3 50%, #E0F7FF 100%)'
-        }}
-      />
-      
-      {/* Floating bubbles animation */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute h-32 w-32 rounded-full bg-[#FF6B6B]/30 blur-xl animate-float" 
-          style={{ left: '10%', top: '20%', animationDelay: '0s' }} />
-        <div className="absolute h-24 w-24 rounded-full bg-[#4ECDC4]/30 blur-xl animate-float" 
-          style={{ left: '80%', top: '15%', animationDelay: '2s' }} />
-        <div className="absolute h-40 w-40 rounded-full bg-[#A770EF]/30 blur-xl animate-float" 
-          style={{ left: '20%', top: '60%', animationDelay: '4s' }} />
+    <section className="w-full py-32 relative bg-[#FDFBF7] overflow-hidden">
+      {/* Container to control background elements */}
+      <div className="absolute inset-0 z-0">
+        {/* Background Vector */}
+        <div className="absolute left-[-200px] top-0 w-[800px] h-[800px] opacity-[1] transform rotate-[270deg]">
+          <Image
+            src={vector}
+            alt="Background vector"
+            fill
+            style={{ objectFit: 'contain' }}
+            priority
+          />
+        </div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
+      {/* Content container with higher z-index */}
+      <div className="relative z-[1] max-w-7xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <div className="text-center mb-20">
-          <span 
-            className="inline-block text-sm tracking-[0.3em] uppercase mb-4 text-gray-800 bg-white/50 px-6 py-2 rounded-full shadow-lg"
-            style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
+          <span
+            className="text-sm tracking-[0.3em] uppercase mb-4 font-bold text-gray-600 block"
           >
             Features
           </span>
-          <h2 
-            className="text-5xl md:text-6xl font-bold font-helvetica bg-clip-text text-transparent"
-            style={{ 
-              background: 'linear-gradient(to right, #2D3047 20%, #419D78 80%)',
-              WebkitBackgroundClip: 'text'
+          <h2
+            className="text-5xl md:text-6xl font-bold text-black mb-16"
+            style={{
+              fontFamily: 'Inter, sans-serif',
+              lineHeight: '1.2'
             }}
           >
-            How BrightStart works
+            How Brightsart works
           </h2>
         </div>
 
@@ -153,23 +93,12 @@ const FeaturesSection: React.FC = () => {
               key={feature.id}
               title={feature.title}
               description={feature.description}
-              icon={feature.icon}
-              gradient={feature.gradient}
-              className="hover:translate-y-[-8px] transition-all duration-300"
+              bgColor={feature.bgColor}
+              className="hover:translate-y-[-4px] transition-all duration-300"
             />
           ))}
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-        }
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-      `}</style>
     </section>
   );
 };
