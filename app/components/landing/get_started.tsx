@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import Image from 'next/image';
-import vector from '../../assets/vector 2.png';
+import vector from '../../assets/vector.png';
 import Footer from '../footer';
 
 const GetStartedSection: React.FC = () => {

@@ -3,7 +3,7 @@ import React from 'react';
 import Navbar from '../navbar';
 import videoSource from '../../assets/ui_prototype.webm';
 import Image from 'next/image';
-import vector from '../../assets/vector 2.png';
+import vector from '../../assets/vector.png';
 
 interface HeroSectionProps {
   className?: string;
