@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import { Search, Plus, MessageSquare, HelpCircle, LogOut } from 'lucide-react';
-import { SidebarProps } from '../types/sidebar';
+import { Conversation, SidebarProps } from '../types/sidebar';
 
 const Sidebar: React.FC<SidebarProps> = ({
   conversations,
@@ -21,21 +21,30 @@ const Sidebar: React.FC<SidebarProps> = ({
     return title.length > 20 ? `${title.substring(0, 20)}...` : title;
   };
 
-  // Get today's date in ISO format for comparison
-  const today = new Date().toISOString().split('T')[0];
-
-  // Filter conversations for today and recent
-  const todayConversations = conversations.filter(conv => {
-    // Assuming _id contains timestamp. Adjust this logic based on your actual date tracking
-    const convDate = new Date(parseInt(conv._id.substring(0, 8), 16) * 1000);
-    return convDate.toISOString().split('T')[0] === today;
-  });
-
-  const recentConversations = conversations.filter(conv => {
-    const convDate = new Date(parseInt(conv._id.substring(0, 8), 16) * 1000);
-    return convDate.toISOString().split('T')[0] !== today;
-  });
-
+  const filterConversationsByDate = (conversations: Conversation[]) => {
+    const today = new Date().toISOString().split('T')[0];
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    const sevenDaysAgoStr = sevenDaysAgo.toISOString().split('T')[0];
+  
+    const todayConversations = conversations.filter(conv => {
+      if (!conv.timestamp) return false;
+      const convDate = new Date(conv.timestamp).toISOString().split('T')[0];
+      return convDate === today;
+    });
+  
+    const recentConversations = conversations.filter(conv => {
+      if (!conv.timestamp) return false;
+      const convDate = new Date(conv.timestamp).toISOString().split('T')[0];
+      return convDate !== today && convDate >= sevenDaysAgoStr;
+    });
+  
+    return {
+      todayConversations,
+      recentConversations
+    };
+  };
+  const { todayConversations, recentConversations } = filterConversationsByDate(conversations);
   return (
     <div className="w-80 h-screen bg-[#090909] border-r border-white/10 flex flex-col">
       {/* Header */}

@@ -1,10 +1,9 @@
 'use client'
+import { chatApi } from '@/app/services/api';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { chatApi } from '@/app/services/api';
-import Sidebar from '../../components/sidebar';
 import ChatSection from '../../components/chatsection';
-
+import Sidebar from '../../components/sidebar';
 interface Message {
   user_type: 'student' | 'assistant';
   message: string;
@@ -15,7 +14,7 @@ interface Conversation {
   title: string;
   messages: string[];
   user: string[];
-  __v: number;
+  __v: number;  
   timestamp: string;
 }
 
@@ -113,7 +112,7 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="flex h-screen bg-[#090909]">
+    <div className="flex h-screen w-screen bg-[#090909]">
       <Sidebar
         conversations={conversations}
         onNewSession={handleNewCase}

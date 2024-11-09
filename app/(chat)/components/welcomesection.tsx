@@ -1,15 +1,31 @@
+'use client'
 import React from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { StudyModeProps } from '../types/welcome';
+import { chatApi } from '@/app/services/api';
 
-const StudyModeButton: React.FC<StudyModeProps> = ({ title, description, href }) => ( //to be moved out
+const StudyModeButton: React.FC<StudyModeProps & { disabled?: boolean; onClick?: () => Promise<void> }> = ({ 
+  title, 
+  description, 
+  disabled,
+  onClick 
+}) => (
   <div className="flex flex-col items-center">
-    <Link 
-      href={href}
-      className="bg-[#89B0FF]/20 text-white px-8 py-4 rounded-lg hover:bg-[#89B0FF]/30 transition-colors mb-6 w-full text-center"
-    >
-      {title}
-    </Link>
+    {disabled ? (
+      <div
+        className="bg-[#89B0FF]/10 text-white/50 px-8 py-4 rounded-lg mb-6 w-full text-center cursor-not-allowed"
+      >
+        {title}
+        <span className="ml-2 text-sm">(Coming Soon)</span>
+      </div>
+    ) : (
+      <button
+        onClick={onClick}
+        className="bg-[#89B0FF]/20 text-white px-8 py-4 rounded-lg hover:bg-[#89B0FF]/30 transition-colors mb-6 w-full text-center"
+      >
+        {title}
+      </button>
+    )}
     <p className="text-white/70 text-center max-w-xs">
       {description}
     </p>
@@ -17,26 +33,43 @@ const StudyModeButton: React.FC<StudyModeProps> = ({ title, description, href })
 );
 
 const WelcomePage: React.FC = () => {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const handleCreateCase = async () => {
+    setIsLoading(true);
+    try {
+      const data = await chatApi.createNewCase('ready');
+      if (data.conversationId) {
+        router.push(`/chat/${data.conversationId}`);
+      }
+    } catch (error) {
+      console.error('Error creating new case:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const studyModes = [
     {
       title: "VIRTUAL PATIENT CASES",
       description: "Need practice identifying your knowledge gap? Generate Patient scenarios and put your knowledge to the test.",
-      href: "/virtual-cases"
+      disabled: false
     },
     {
       title: "KNOWLEDGE CHECK",
       description: "Stuck looking for an answer? Ask any question related to the material, and I'll even link it to the material",
-      href: "/knowledge-check"
+      disabled: true
     },
     {
       title: "ASK ANYTHING",
       description: "Don't understand a section in the material? Paste in or reference a section to explain it better.",
-      href: "/ask"
+      disabled: true
     }
   ];
 
   return (
-    <div className="min-h-screen  flex items-center  justify-center pl-20">
+    <div className="min-h-screen flex items-center justify-center pl-20">
       <div className="max-w-6xl w-full">
         {/* Welcome Text */}
         <div className="mb-20">
@@ -51,13 +84,14 @@ const WelcomePage: React.FC = () => {
         </div>
 
         {/* Study Modes */}
-        <div className="grid grid-cols-1 md:grid-cols-3 ">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {studyModes.map((mode, index) => (
             <StudyModeButton
               key={index}
-              title={mode.title}
+              title={isLoading && !mode.disabled ? `${mode.title} ...` : mode.title}
               description={mode.description}
-              href={mode.href}
+              disabled={mode.disabled}
+              onClick={!mode.disabled ? handleCreateCase : undefined}
             />
           ))}
         </div>
