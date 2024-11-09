@@ -6,7 +6,7 @@ import { ApiMessage, ChatSectionProps, ConversationMessage } from '../types/chat
 
 interface MessageDisplay {
   content: string;
-  type: 'student' | 'assistant';
+  type: 'student' | 'assistant' | 'parent';
 }
 
 const formatMessageForDisplay = (message: ConversationMessage | ApiMessage): MessageDisplay => {
@@ -22,7 +22,7 @@ const formatMessageForDisplay = (message: ConversationMessage | ApiMessage): Mes
   };
 };
 
-const MessageBubble: React.FC<{ message: MessageDisplay }> = ({ message }) => {  const formatContent = (content: string) => {
+const MessageBubble: React.FC<{ message: MessageDisplay,title:string }> = ({ message,title }) => {  const formatContent = (content: string) => {
     return content.split('\n').map((line, index) => (
       <React.Fragment key={index}>
         {line}
@@ -30,8 +30,28 @@ const MessageBubble: React.FC<{ message: MessageDisplay }> = ({ message }) => { 
       </React.Fragment>
     ));
   };
+  const c = ((title == 'hcw') ? '#D1E4D1' : '#E0D7CE');
 
   if (message.type === 'student') {
+    return (
+      <div className="flex justify-end">
+        <div className="bg-[#FFE5EC] p-4 rounded-lg max-w-[85%]"             style={{
+              backgroundColor: c
+            }}>
+          <div className="flex items-center gap-2 text-black mb-2 font-bold text-[20px] font-helvetica">
+            <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center">
+              <CircleUser />
+            </div>
+            <span>Student</span>
+          </div>
+          <div className="text-black font-helvetica text-[20px] font-normal leading-[30px] text-left">
+            {message.content}  {/* Changed from user_prompt to message */}
+          </div>
+        </div>
+      </div>
+    );
+  }
+  else if (message.type === 'parent') {
     return (
       <div className="flex justify-end">
         <div className="bg-[#FFE5EC] p-4 rounded-lg max-w-[85%]">
@@ -59,6 +79,7 @@ const MessageBubble: React.FC<{ message: MessageDisplay }> = ({ message }) => { 
 
 
 const ChatSection: React.FC<ChatSectionProps> = ({ 
+  title = '',
   messages = [], 
   onSendMessage, 
   isGeneratingCase = false
@@ -97,7 +118,7 @@ const ChatSection: React.FC<ChatSectionProps> = ({
         <div className="pt-20 px-8 pb-8"> 
           <div className="max-w-4xl mx-auto space-y-6">
             {displayMessages.map((message, index) => (
-              <MessageBubble message={message} key={index} />
+              <MessageBubble message={message} key={index} title={title} />
             ))}
             {isAiTyping && (
               <div className="text-black italic">

@@ -77,7 +77,7 @@ export default function ChatPage() {
     if (!params.id) return;
 
     try {
-      const data: MessageResponse = await chatApi.continueConversation(
+      const data: MessageResponse = await chatApi.parent.continue(
         params.id as string,
         message
       );
@@ -93,7 +93,7 @@ export default function ChatPage() {
   const handleNewCase = async () => {
     setIsGeneratingCase(true);
     try {
-      const data = await chatApi.createNewCase('ready');
+      const data = await chatApi.parent.create('ready');
       if (data.conversationId) {
         router.push(`/parent/${data.conversationId}`);
         // Refresh conversations list

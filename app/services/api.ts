@@ -2,6 +2,8 @@ import { ConversationResponse, CreateConversationResponse, HistoryConversation, 
 
 const API_BASE_URL = 'https://fourmm-llama-hackathon-backend.onrender.com/api';
 
+export type ConversationType = 'parent' | 'hcw' | 'virtual-patient';
+
 export const chatApi = {
   getConversations: async (): Promise<{ conversations: HistoryConversation[] }> => {
     const response = await fetch(`${API_BASE_URL}/conversation`);
@@ -13,8 +15,12 @@ export const chatApi = {
     return await response.json();
   },
 
-  continueConversation: async (id: string, message: string): Promise<MessageResponse> => {
-    const response = await fetch(`${API_BASE_URL}/conversation/${id}`, {
+  continueConversation: async (
+    type: ConversationType,
+    id: string, 
+    message: string
+  ): Promise<MessageResponse> => {
+    const response = await fetch(`${API_BASE_URL}/conversation/${type}/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ question: message }),
@@ -22,12 +28,40 @@ export const chatApi = {
     return await response.json();
   },
 
-  createNewCase: async (message: string): Promise<CreateConversationResponse> => {
-    const response = await fetch(`${API_BASE_URL}/conversation`, {
+  createConversation: async (
+    type: ConversationType,
+    message: string
+  ): Promise<CreateConversationResponse> => {
+    const response = await fetch(`${API_BASE_URL}/conversation/${type}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ question: message }),
     });
     return await response.json();
   },
+
+  // Specific typed methods for each conversation type
+  parent: {
+    create: async (message: string) => 
+      chatApi.createConversation('parent', message),
+    continue: async (id: string, message: string) => 
+      chatApi.continueConversation('parent', id, message)
+  },
+
+  hcw: {
+    create: async (message: string) => 
+      chatApi.createConversation('hcw', message),
+    continue: async (id: string, message: string) => 
+      chatApi.continueConversation('hcw', id, message)
+  },
+
+  virtualPatient: {
+    create: async (message: string) => 
+      chatApi.createConversation('virtual-patient', message),
+    continue: async (id: string, message: string) => 
+      chatApi.continueConversation('virtual-patient', id, message)
+  }
 };
+
+// For backward compatibility
+export const createNewCase = chatApi.parent.create;

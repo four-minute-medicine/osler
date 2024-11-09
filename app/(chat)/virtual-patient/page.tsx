@@ -23,9 +23,9 @@ export default function Welcome() {
   const handleNewCase = async () => {
     setIsGeneratingCase(true);
     try {
-      const data = await chatApi.createNewCase('ready');
+      const data = await chatApi.virtualPatient.create('ready');
       if (data.conversationId) {
-        router.push(`/parent/${data.conversationId}`);
+        router.push(`/virtual-patient/${data.conversationId}`);
         // Refresh conversations list
         const updatedData = await chatApi.getConversations();
         setConversations(updatedData.conversations);
@@ -38,7 +38,7 @@ export default function Welcome() {
   };
 
   const handleSelectConversation = (id: string) => {
-    router.push(`/parent/${id}`);
+    router.push(`/virtual-patient/${id}`);
   };
 
   // Fetch conversations when component mounts
@@ -64,7 +64,7 @@ export default function Welcome() {
         onSelectConversation={handleSelectConversation}
         activeConversationId=''
       />
-      <IntroSection highlightedWord=' VIRTUAL PATIENT' unHighlightedWord='CASES' colour='#E0D7CE' discription=' scenario-based learning tool helps healthcare workers build childcare related diagnostic and communication skills  with confidence'/>
+      <IntroSection highlightedWord=' VIRTUAL PATIENT' chat='virtual-patient' unHighlightedWord='CASES' colour='#E0D7CE' discription=' scenario-based learning tool helps healthcare workers build childcare related diagnostic and communication skills  with confidence'/>
     </div>
   );
 }

@@ -77,7 +77,7 @@ export default function ChatPage() {
     if (!params.id) return;
 
     try {
-      const data: MessageResponse = await chatApi.continueConversation(
+      const data: MessageResponse = await chatApi.hcw.continue(
         params.id as string,
         message
       );
@@ -93,9 +93,9 @@ export default function ChatPage() {
   const handleNewCase = async () => {
     setIsGeneratingCase(true);
     try {
-      const data = await chatApi.createNewCase('ready');
+      const data = await chatApi.hcw.create('ready');
       if (data.conversationId) {
-        router.push(`/parent/${data.conversationId}`);
+        router.push(`/hcw/${data.conversationId}`);
         // Refresh conversations list
         const updatedData = await chatApi.getConversations();
         setConversations(updatedData.conversations);
@@ -108,7 +108,7 @@ export default function ChatPage() {
   };
 
   const handleSelectConversation = (id: string) => {
-    router.push(`/parent/${id}`);
+    router.push(`/hcw/${id}`);
   };
 
   return (
@@ -116,11 +116,12 @@ export default function ChatPage() {
       <Sidebar
         conversations={conversations}
         onNewSession={handleNewCase}
-        colour='#FFE5EC'
+        colour='#D1E4D1'
         onSelectConversation={handleSelectConversation}
         activeConversationId={params.id as string}
       />
       <ChatSection
+        title = 'hcw'
         messages={messages}
         onSendMessage={handleSendMessage}
         onNewCase={handleNewCase}

@@ -43,6 +43,7 @@ export interface CreateConversationResponse {
   messages: ApiMessage[];
 }
   export interface ChatSectionProps {
+    title?: string;
     messages: Message[];
     onSendMessage: (message: string) => Promise<void>;
     onNewCase: () => Promise<void>;

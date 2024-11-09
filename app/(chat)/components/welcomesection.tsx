@@ -60,7 +60,7 @@
       {
         title: "VIRTUAL PATIENT CASES",
         description: "Don't understand a section in the material? Paste in or reference a section to explain it better.",
-        href: '/virtualpatient',
+        href: '/virtual-patient',
         disabled: false
       }
     ];

@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import { ArrowUp } from 'lucide-react';
-import { chatApi } from '@/app/services/api';
+import { chatApi, ConversationType } from '@/app/services/api';
 import { Baloo_Bhai_2 } from 'next/font/google';
 import { useRouter } from 'next/navigation';
 
 const balooBhai = Baloo_Bhai_2({ subsets: ['latin'] });
 
 interface ChatViewProps {
+  chat?: ConversationType;
   highlightedWord?: string;
   unHighlightedWord?:string;
   discription:string;
   colour:string;
 }
 
-const IntroSection: React.FC<ChatViewProps> = ({ highlightedWord = 'Parent',unHighlightedWord ,colour, discription}) => {
+const IntroSection: React.FC<ChatViewProps> = ({ highlightedWord = 'Parent',unHighlightedWord ,colour, discription,chat='parent'}) => {
   const [question, setQuestion] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -24,7 +25,7 @@ const IntroSection: React.FC<ChatViewProps> = ({ highlightedWord = 'Parent',unHi
 
     setIsLoading(true);
     try {
-      const response = await chatApi.createNewCase(question);
+      const response = await chatApi.createConversation(chat ,question);
       if (response.conversationId) {
         router.push(`/${highlightedWord}/${response.conversationId}`);
       }
@@ -46,7 +47,7 @@ const IntroSection: React.FC<ChatViewProps> = ({ highlightedWord = 'Parent',unHi
           <span >{unHighlightedWord}</span>
         </h1>
         <div className="max-w-2xl  mx-auto">
-          <p className="text-lg">
+          <p className="text-2xl">
             {discription}
           </p>
         </div>

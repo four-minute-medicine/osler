@@ -23,9 +23,9 @@ export default function Welcome() {
   const handleNewCase = async () => {
     setIsGeneratingCase(true);
     try {
-      const data = await chatApi.createNewCase('ready');
+      const data = await chatApi.hcw.create('ready');
       if (data.conversationId) {
-        router.push(`/parent/${data.conversationId}`);
+        router.push(`/hcw/${data.conversationId}`);
         // Refresh conversations list
         const updatedData = await chatApi.getConversations();
         setConversations(updatedData.conversations);
@@ -38,7 +38,7 @@ export default function Welcome() {
   };
 
   const handleSelectConversation = (id: string) => {
-    router.push(`/parent/${id}`);
+    router.push(`/hcw/${id}`);
   };
 
   // Fetch conversations when component mounts

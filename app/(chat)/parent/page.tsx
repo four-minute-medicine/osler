@@ -23,7 +23,7 @@ export default function Welcome() {
   const handleNewCase = async () => {
     setIsGeneratingCase(true);
     try {
-      const data = await chatApi.createNewCase('ready');
+      const data = await chatApi.parent.create('ready');
       if (data.conversationId) {
         router.push(`/parent/${data.conversationId}`);
         // Refresh conversations list
