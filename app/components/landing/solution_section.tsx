@@ -6,7 +6,7 @@ const SolutionSection: React.FC = () => {
     <section className="w-full pt-10 min-h-screen relative bg-[#FDFBF7] overflow-hidden">
 
       {/* Content with higher z-index */}
-      <div className="relative z-[1] mx-auto px-6 py-32">
+      <div className="relative z-[1] mx-auto pl-9 py-32">
         <div className="flex flex-col items-center max-w-[1400px] mx-auto">
           {/* Header with minimal styling */}
           <div className="relative mb-16">

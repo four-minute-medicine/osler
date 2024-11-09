@@ -67,7 +67,7 @@ const FeaturesSection: React.FC = () => {
       </div>
 
       {/* Content container with higher z-index */}
-      <div className="relative z-[1] max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="relative z-[1] max-w-7xl mx-auto pl-9 sm:pl-9">
         {/* Section Header */}
         <div className="text-center mb-20">
           <span

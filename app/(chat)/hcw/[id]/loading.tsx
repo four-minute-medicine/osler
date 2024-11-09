@@ -4,4 +4,4 @@ export default function Loading() {
         <div className="text-white">Loading conversation...</div>
       </div>
     );
-  }
+  } 

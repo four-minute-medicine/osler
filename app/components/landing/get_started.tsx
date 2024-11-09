@@ -8,7 +8,7 @@ import router from 'next/router';
 const GetStartedSection: React.FC = () => {
   return (
     <section
-      className="w-full min-h-screen py-32 relative overflow-hidden bg-[#FDFBF7] z-0"
+      className="w-full min-h-screen py-32 pl-9 relative overflow-hidden bg-[#FDFBF7] z-0"
     >
       {/* Background Vector */}
       <div className="absolute left-[-200px] top-1/2 w-[800px] h-[800px] opacity-[0.15] transform rotate-[270deg]">
