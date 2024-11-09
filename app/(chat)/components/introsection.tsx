@@ -39,7 +39,7 @@ const IntroSection: React.FC<ChatViewProps> = ({ highlightedWord = 'Parent',unHi
       {/* Header Section */}
       <div className="text-center mb-12 text-black">
         <h1 className={`${balooBhai.className} text-8xl font-bold mb-6 flex items-center justify-center gap-2`}>
-          <span className={`bg-[${colour}] px-4 py-1 rounded-lg`}>
+          <span className={`px-4 py-1 rounded-lg`} style={{background:colour}}>
             {highlightedWord}
           </span>
           <span >{unHighlightedWord}</span>

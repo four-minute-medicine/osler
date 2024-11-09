@@ -37,7 +37,6 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
               Navigating child health<br /> guidelines, simplified.
             </h1>
             <p className="text-gray-600 mx-auto mb-16 max-w-[900px]" style={{
-              fontFamily: 'Inter, sans-serif',
               fontSize: '24px',
               fontWeight: '400',
               lineHeight: '1.5'
