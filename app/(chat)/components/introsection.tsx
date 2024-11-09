@@ -9,10 +9,11 @@ const balooBhai = Baloo_Bhai_2({ subsets: ['latin'] });
 interface ChatViewProps {
   highlightedWord?: string;
   unHighlightedWord?:string;
+  discription:string;
   colour:string;
 }
 
-const IntroSection: React.FC<ChatViewProps> = ({ highlightedWord = 'Parent',unHighlightedWord ,colour}) => {
+const IntroSection: React.FC<ChatViewProps> = ({ highlightedWord = 'Parent',unHighlightedWord ,colour, discription}) => {
   const [question, setQuestion] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -45,9 +46,8 @@ const IntroSection: React.FC<ChatViewProps> = ({ highlightedWord = 'Parent',unHi
           <span >{unHighlightedWord}</span>
         </h1>
         <div className="max-w-2xl  mx-auto">
-          <p className="text-2xl mb-2">Have a question about your child&apos;s health?</p>
           <p className="text-lg">
-            I&apos;m here to help! Ask me anything about the Road to Health Book.
+            {discription}
           </p>
         </div>
       </div>

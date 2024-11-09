@@ -64,7 +64,7 @@ export default function Welcome() {
         onSelectConversation={handleSelectConversation}
         activeConversationId=''
       />
-      <IntroSection highlightedWord='Parent' unHighlightedWord='Chat' colour='#FFE5EC'/>
+      <IntroSection highlightedWord='Parent' unHighlightedWord='Chat' colour='#FFE5EC' discription="Have a question about your child's health? I'm here to help! Ask me anything about the Road to Health Book."/>
     </div>
   );
 }

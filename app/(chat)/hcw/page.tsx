@@ -51,7 +51,6 @@ export default function Welcome() {
         console.error('Error fetching conversations:', error);
       }
     };
-
     fetchConversations();
   }, []);
 
@@ -64,7 +63,7 @@ export default function Welcome() {
         onSelectConversation={handleSelectConversation}
         activeConversationId=''
       />
-      <IntroSection highlightedWord='HCW' unHighlightedWord='Chat' colour='#D1E4D1'/>
+      <IntroSection highlightedWord='HCW' unHighlightedWord='Chat' colour='#D1E4D1' discription="Helps healthcare workers (HCWs) find the information they are looking for whilst in the flow of work"/>
     </div>
   );
 }
