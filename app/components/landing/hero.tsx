@@ -42,8 +42,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
               fontWeight: '400',
               lineHeight: '1.5'
             }}>
-              Start bright, stay bright with Brightstart. Empowering parents and healthcare workers to navigate child health related issues with confidence.
-            </p>
+Start bright, stay bright with BrightStart. Empowering parents and healthcare workers to navigate child health related issues with confidence.            </p>
 
             <button
               className="px-8 py-4 text-xl font-medium bg-[#FFEF89] text-black rounded-lg hover:bg-[#FFD84D] transition-all duration-300"

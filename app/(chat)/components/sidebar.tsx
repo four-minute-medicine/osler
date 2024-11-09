@@ -2,21 +2,25 @@
 import React, { useState } from 'react';
 import { Search, Plus, MessageSquare, HelpCircle, LogOut } from 'lucide-react';
 import { Conversation, SidebarProps } from '../types/sidebar';
+import { Baloo_Bhai_2 } from 'next/font/google';
+import { useRouter } from 'next/navigation';
+
+const balooBhai = Baloo_Bhai_2({ subsets: ['latin'] });
 
 const Sidebar: React.FC<SidebarProps> = ({
   conversations,
   onNewSession,
   onSearch,
-  onClearHistory,
+  colour,
   onSelectConversation,
   activeConversationId
 }) => {
   const [searchVisible, setSearchVisible] = useState(false);
-  const baseTextStyle = "font-helvetica text-[18px] font-normal leading-[20px] text-left";
+  const router = useRouter();
 
-  // Helper function to format and truncate title
+  // Keep your existing helper functions
   const formatTitle = (title: string) => {
-    if (title ==undefined ||!title.trim()) return "New Conversation";
+    if (title === undefined || !title.trim()) return "New Conversation";
     if (title.endsWith('...')) return title;
     return title.length > 20 ? `${title.substring(0, 20)}...` : title;
   };
@@ -44,117 +48,79 @@ const Sidebar: React.FC<SidebarProps> = ({
       recentConversations
     };
   };
-  const { todayConversations, recentConversations } = filterConversationsByDate(conversations);
-  return (
-    <div className="w-80 h-screen bg-[#090909] border-r border-white/10 flex flex-col">
-      {/* Header */}
-      <div className="p-4">
-        <div className="text-white text-2xl font-bold mb-4">
-          Osler
-        </div>
 
-        {/* New Session & Search */}
+  const { todayConversations, recentConversations } = filterConversationsByDate(conversations);
+  
+  return (
+    <div style={{ backgroundColor: colour }} className="w-80 h-screen flex flex-col px-4 py-6">
+      {/* Header */}
+      <div className="mb-8">
+        <button 
+          onClick={() => router.push('/')}
+          className={`${balooBhai.className} text-black text-[30px] text-center font-normal leading-[25px] mb-6 w-full hover:opacity-80 transition-opacity`}
+        >
+          Brightstart
+        </button>
+        
         <div className="flex gap-2 mb-4">
           <button 
             onClick={onNewSession}
-            className={`flex items-center gap-2 bg-[#89B0FF] text-black px-4 py-2 rounded-lg flex-grow hover:bg-[#89B0FF]/90 transition-colors ${baseTextStyle}`}
+            className="flex items-center gap-2 bg-[#FFE27D] text-black px-4 py-3 rounded-lg w-full hover:bg-[#FFD84D] transition-all duration-300"
           >
             <Plus className="w-4 h-4" />
-            Start a new session
+            <span className="font-medium">Start a new session</span>
           </button>
-          <button 
-            onClick={() => setSearchVisible(!searchVisible)}
-            className="p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors"
-          >
-            <Search className="w-5 h-5 text-white/70" />
-          </button>
+          {searchVisible && (
+            <button 
+              onClick={() => setSearchVisible(!searchVisible)}
+              className="p-2 bg-black/5 rounded-lg hover:bg-black/10 transition-colors"
+            >
+              <Search className="w-4 h-4 text-gray-700" />
+            </button>
+          )}
         </div>
 
-        {/* Search Input */}
         {searchVisible && (
-          <div className="mb-4">
-            <input
-              type="text"
-              placeholder="Search conversations..."
-              onChange={(e) => onSearch?.(e.target.value)}
-              className={`w-full bg-white/5 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-white/20 ${baseTextStyle}`}
-            />
-          </div>
+          <input
+            type="text"
+            placeholder="Search conversations..."
+            onChange={(e) => onSearch?.(e.target.value)}
+            className="w-full bg-white/50 text-gray-700 rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-1 focus:ring-black/10"
+          />
         )}
-
-        <div className="h-px bg-white/10 mx-2 my-2" />
-        
-        {/* History Header */}
-        <div className="flex justify-between items-center mb-2">
-          <span className={`text-white/70 ${baseTextStyle}`}>
-            Your conversation
-          </span>
-          <button 
-            onClick={onClearHistory}
-            className={`text-[#89B0FF] hover:underline ${baseTextStyle}`}
-          >
-            Clear All
-          </button>
-        </div>
-
-        <div className="h-px bg-white/10 mx-2 my-2" />
       </div>
 
       {/* History List */}
-      <div className="flex-grow overflow-auto px-2">
-        {/* Today's conversations */}
-        {todayConversations.map((conversation) => (
-          <div 
+      <div className="flex-grow overflow-auto">
+        <div className="mb-4 text-gray-600 text-sm font-medium">
+          Last 7 days
+        </div>
+        
+        {todayConversations.concat(recentConversations).map((conversation) => (
+          <button
             key={conversation._id}
             onClick={() => onSelectConversation?.(conversation._id)}
-            className={`flex items-center gap-3 p-3 hover:bg-white/5 rounded-lg cursor-pointer group
-              ${activeConversationId === conversation._id ? 'bg-white/5' : ''}`}
+            className={`flex items-center gap-3 w-full p-3 rounded-lg text-gray-700 hover:bg-black/5 transition-colors mb-2 ${
+              activeConversationId === conversation._id ? 'bg-black/5' : ''
+            }`}
           >
-            <MessageSquare className="w-5 h-5 text-white/70" />
-            <span className={`text-white/70 truncate group-hover:text-white transition-colors ${baseTextStyle}`}>
+            <MessageSquare className="w-4 h-4" />
+            <span className="text-sm font-medium">
               {formatTitle(conversation.title)}
             </span>
-          </div>
+          </button>
         ))}
-
-        {recentConversations.length > 0 && (
-          <>
-            <div className="h-px bg-white/10 mx-2 my-2" />
-            <div className={`py-2 px-3 text-white/50 ${baseTextStyle}`}>
-              Last 7 days
-            </div>
-            <div className="h-px bg-white/10 mx-2 my-2" />
-            
-            {recentConversations.map((conversation) => (
-              <div 
-                key={conversation._id}
-                onClick={() => onSelectConversation?.(conversation._id)}
-                className={`flex items-center gap-3 p-3 hover:bg-white/5 rounded-lg cursor-pointer group
-                  ${activeConversationId === conversation._id ? 'bg-white/5' : ''}`}
-              >
-                <MessageSquare className="w-5 h-5 text-white/70" />
-                <span className={`text-white/70 truncate group-hover:text-white transition-colors ${baseTextStyle}`}>
-                  {formatTitle(conversation.title)}
-                </span>
-              </div>
-            ))}
-          </>
-        )}
       </div>
 
       {/* Bottom Links */}
-      <div className="mt-auto border-t border-white/10 p-2">
-        <button className="flex items-center gap-3 p-3 w-full hover:bg-white/5 rounded-lg text-white/70 group">
-          <HelpCircle className="w-5 h-5" />
-          <span className={`group-hover:text-white transition-colors ${baseTextStyle}`}>
-            Updates & FAQ
-          </span>
+      <div className="mt-auto space-y-2">
+        <button className="flex items-center gap-3 w-full p-3 rounded-lg text-gray-700 hover:bg-black/5 transition-colors">
+          <HelpCircle className="w-4 h-4" />
+          <span className="text-sm font-medium">Updates & FAQ</span>
         </button>
-        <button className="flex items-center gap-3 p-3 w-full hover:bg-white/5 rounded-lg text-white/70 group">
-          <LogOut className="w-5 h-5" />
-          <span className={`group-hover:text-white transition-colors ${baseTextStyle}`}>
-            Logout
-          </span>
+        <button className="flex items-center gap-3 w-full p-3 rounded-lg text-gray-700 hover:bg-black/5 transition-colors">
+          <LogOut className="w-4 h-4" />
+          <span className="text-sm font-medium">Logout</span>
         </button>
       </div>
     </div>

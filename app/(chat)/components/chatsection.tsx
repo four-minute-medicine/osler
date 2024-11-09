@@ -1,6 +1,6 @@
 'use client'
 import React, { useRef, useEffect, useState } from 'react';
-import { ArrowUpCircle, CircleUser, Plus } from 'lucide-react';
+import { ArrowUp, CircleUser, Mic } from 'lucide-react';
 import { ApiMessage, ChatSectionProps, ConversationMessage } from '../types/chat';
 
 
@@ -34,7 +34,7 @@ const MessageBubble: React.FC<{ message: MessageDisplay }> = ({ message }) => { 
   if (message.type === 'student') {
     return (
       <div className="flex justify-end">
-        <div className="bg-[#D8E4FC] p-4 rounded-lg max-w-[85%]">
+        <div className="bg-[#FFE5EC] p-4 rounded-lg max-w-[85%]">
           <div className="flex items-center gap-2 text-black mb-2 font-bold text-[20px] font-helvetica">
             <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center">
               <CircleUser />
@@ -50,7 +50,7 @@ const MessageBubble: React.FC<{ message: MessageDisplay }> = ({ message }) => { 
   }
 
   return (
-    <div className="text-white/70 font-helvetica text-[20px] font-light italic leading-[30px] text-left">
+    <div className="text-black font-helvetica text-[20px] font-light italic leading-[30px] text-left">
       {formatContent(message.content)}  {/* Changed from user_prompt to message */}
     </div>
   );
@@ -61,7 +61,6 @@ const MessageBubble: React.FC<{ message: MessageDisplay }> = ({ message }) => { 
 const ChatSection: React.FC<ChatSectionProps> = ({ 
   messages = [], 
   onSendMessage, 
-  onNewCase,
   isGeneratingCase = false
 }) => {
   const displayMessages = messages.map(msg => formatMessageForDisplay(msg));
@@ -93,15 +92,15 @@ const ChatSection: React.FC<ChatSectionProps> = ({
   };
 
   return (
-    <div className="flex-1 flex flex-col h-screen bg-[#1B1B1B]">
+    <div className="flex-1 flex flex-col h-screen bg-white">
       <div className="flex-1 overflow-y-auto">
         <div className="pt-20 px-8 pb-8"> 
           <div className="max-w-4xl mx-auto space-y-6">
-            {displayMessages.slice(1).map((message, index) => (
+            {displayMessages.map((message, index) => (
               <MessageBubble message={message} key={index} />
             ))}
             {isAiTyping && (
-              <div className="text-white/50 italic">
+              <div className="text-black italic">
                 Your guide is typing...
               </div>
             )}
@@ -111,47 +110,57 @@ const ChatSection: React.FC<ChatSectionProps> = ({
       </div>
 
       {/* Input Area */}
+      <div className="w-full max-w-4xl mx-auto px-4 mb-8">
+      {/* Disclaimer text */}
+
+
       <div className="border-t border-white/10 p-4">
         <div className="max-w-4xl mx-auto">
-          <form onSubmit={handleSubmit}>
-            <div className="relative">
-              <input
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                placeholder="Type your response here..."
-                className="w-full bg-white/5 text-white rounded-lg pl-4 pr-12 py-3 focus:outline-none focus:ring-1 focus:ring-white/20"
-                disabled={isGeneratingCase}
-              />
-              <button
-                type="submit"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#89B0FF] hover:text-[#89B0FF]/80 transition-colors disabled:opacity-50"
-                disabled={!inputValue.trim() || isAiTyping || isGeneratingCase}
-              >
-                <ArrowUpCircle className="w-6 h-6" />
-              </button>
-            </div>
-          </form>
+        <form onSubmit={handleSubmit} className="relative">
+        <div className="relative flex items-center gap-3">
+          {/* Mic icon */}
+          <div className="absolute left-4 text-black">
+            <Mic className="w-5 h-5" />
+          </div>
 
+          {/* Text input */}
+          <input
+            type="text"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder="Type your question here..."
+            className="w-full bg-[#F4F4F4] text-black rounded-[14px] pl-12 pr-12 py-4 focus:outline-none"
+            disabled={isGeneratingCase}
+          />
+
+          {/* Submit button */}
+          <button
+          type="submit"
+          className={`
+            w-[46px] h-[46px] rounded-full flex items-center justify-center
+            ${inputValue.trim() && !isGeneratingCase 
+              ? 'bg-[#FFE27D] hover:bg-[#FFD84D]' 
+              : 'bg-gray-200'
+            }
+            transition-all duration-200 disabled:opacity-50
+          `}
+          disabled={!inputValue.trim() || isGeneratingCase}
+        >
+          <ArrowUp 
+            className={`w-5 h-5 ${inputValue.trim() && !isGeneratingCase ? 'text-black' : 'text-gray-400'}`}
+          />
+        </button>
+        </div>
+      </form>
+      <p className="text-center text-gray-600 text-sm mt-4">
+        Information is for educational purposes. Always consult a healthcare worker if you child has any danger signs.
+      </p>
+</div>
           <div className="mt-4 text-center">
             <div className="text-white/50 text-xs mb-4">
               Answers are generated from our content and intended for study support. 
               For detailed guidance, always refer to official medical sources.
             </div>
-            <button
-              onClick={onNewCase}
-              disabled={isGeneratingCase}
-              className="flex items-center gap-2 bg-[#89B0FF] text-black px-4 py-2 rounded-lg mx-auto hover:bg-[#89B0FF]/90 transition-colors disabled:opacity-50"
-            >
-              {isGeneratingCase ? (
-                <span>Generating new case...</span>
-              ) : (
-                <>
-                  <Plus className="w-4 h-4" />
-                  Generate a new case
-                </>
-              )}
-            </button>
           </div>
         </div>
       </div>

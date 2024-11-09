@@ -22,7 +22,7 @@ export interface SidebarProps {
     conversations: Conversation[];
     onNewSession?: () => void;
     onSearch?: (query: string) => void;
-    onClearHistory?: () => void;
+    colour: string;
     onSelectConversation?: (id: string) => void;
     activeConversationId?: string;
   }

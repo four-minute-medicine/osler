@@ -3,6 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import vector from '../../assets/vector.png';
 import Footer from '../footer';
+import router from 'next/router';
 
 const GetStartedSection: React.FC = () => {
   return (
@@ -48,6 +49,7 @@ const GetStartedSection: React.FC = () => {
             </h2>
 
             <button 
+              onClick={() => router.push('/welcome')}
               className="px-8 py-4 text-xl font-helvetica font-bold bg-[#FFEF89] text-black rounded-lg hover:bg-[#FFD84D] transition-all duration-300"
             >
               Try Our Beta Now

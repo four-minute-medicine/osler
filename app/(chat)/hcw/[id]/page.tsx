@@ -95,7 +95,7 @@ export default function ChatPage() {
     try {
       const data = await chatApi.createNewCase('ready');
       if (data.conversationId) {
-        router.push(`/chat/${data.conversationId}`);
+        router.push(`/parent/${data.conversationId}`);
         // Refresh conversations list
         const updatedData = await chatApi.getConversations();
         setConversations(updatedData.conversations);
@@ -108,7 +108,7 @@ export default function ChatPage() {
   };
 
   const handleSelectConversation = (id: string) => {
-    router.push(`/chat/${id}`);
+    router.push(`/parent/${id}`);
   };
 
   return (
@@ -116,6 +116,7 @@ export default function ChatPage() {
       <Sidebar
         conversations={conversations}
         onNewSession={handleNewCase}
+        colour='#FFE5EC'
         onSelectConversation={handleSelectConversation}
         activeConversationId={params.id as string}
       />

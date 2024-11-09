@@ -78,11 +78,10 @@ const FeaturesSection: React.FC = () => {
           <h2
             className="text-5xl md:text-6xl font-bold text-black mb-16"
             style={{
-              fontFamily: 'Inter, sans-serif',
               lineHeight: '1.2'
             }}
           >
-            How Brightsart works
+          How BrightStart works
           </h2>
         </div>
 

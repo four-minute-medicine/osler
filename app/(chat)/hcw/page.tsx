@@ -1,10 +1,10 @@
 'use client'
 import { useState } from 'react';
-import WelcomePage from "../components/welcomesection";
 import Sidebar from "../components/sidebar";
 import { useRouter } from 'next/navigation';
 import { chatApi } from '@/app/services/api';
 import React from 'react';
+import IntroSection from '../components/introsection';
 
 interface Conversation {
   _id: string;
@@ -25,7 +25,7 @@ export default function Welcome() {
     try {
       const data = await chatApi.createNewCase('ready');
       if (data.conversationId) {
-        router.push(`/chat/${data.conversationId}`);
+        router.push(`/parent/${data.conversationId}`);
         // Refresh conversations list
         const updatedData = await chatApi.getConversations();
         setConversations(updatedData.conversations);
@@ -38,7 +38,7 @@ export default function Welcome() {
   };
 
   const handleSelectConversation = (id: string) => {
-    router.push(`/chat/${id}`);
+    router.push(`/parent/${id}`);
   };
 
   // Fetch conversations when component mounts
@@ -56,15 +56,15 @@ export default function Welcome() {
   }, []);
 
   return (
-    <div className="flex h-screen bg-white">
+    <div className="flex h-screen w-screen bg-white">
       <Sidebar
         conversations={conversations}
         onNewSession={handleNewCase}
-        colour='#F2F1E5'
+        colour='#D1E4D1'
         onSelectConversation={handleSelectConversation}
         activeConversationId=''
       />
-      <WelcomePage />
+      <IntroSection highlightedWord='HCW' unHighlightedWord='Chat' colour='#D1E4D1'/>
     </div>
   );
 }
