@@ -3,6 +3,9 @@
 ## Overview
 BrightStart is an AI-powered medical training platform designed to help medical students and professionals enhance their clinical decision-making skills through interactive patient simulations. The platform provides realistic case scenarios, adaptive feedback, and comprehensive learning experiences.
 
+## Backend Repo
+https://github.com/four-minute-medicine/osler-backend
+
 ## Features
 - **Virtual Patient Simulations**: Practice with realistic patient scenarios
 - **Interactive Learning**: Real-time feedback and adaptive learning paths
