@@ -1,36 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BrightStart - Medical Training Simulator
+
+## Overview
+BrightStart is an AI-powered medical training platform designed to help medical students and professionals enhance their clinical decision-making skills through interactive patient simulations. The platform provides realistic case scenarios, adaptive feedback, and comprehensive learning experiences.
+
+## Features
+- **Virtual Patient Simulations**: Practice with realistic patient scenarios
+- **Interactive Learning**: Real-time feedback and adaptive learning paths
+- **Case Library**: Access to diverse medical cases and scenarios
+- **Progress Tracking**: Monitor your learning journey and improvement
+- **Responsive Design**: Seamless experience across all devices
+
+## Technology Stack
+- **Frontend**:
+  - Next.js 14 (App Router)
+  - TypeScript
+  - Tailwind CSS
+  - Lucide Icons
+  - React Hooks
+
+- **Backend**:
+  - Node.js
+  - Express
+  - MongoDB
+  - LLM Integration
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js 18.0 or higher
+- npm or yarn
+- MongoDB (for local development)
 
+### Installation
+1. Clone the repository
+```bash
+git clone https://github.com/yourusername/brightstart.git
+cd brightstart
+```
+
+2. Install dependencies
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Run the development server
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
+```
+brightstart/
+├── app/
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── chat/
+│   └── welcome/
+├── components/
+│   ├── chat/
+│   ├── sidebar/
+│   └── ui/
+├── lib/
+│   └── utils/
+├── public/
+│   └── assets/
+└── types/
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Usage
+1. Visit the homepage
+2. Click "Try Now" to start a new session
+3. Select your preferred study mode:
+   - Virtual Patient Cases
+   - Knowledge Check (Coming Soon)
+   - Ask Anything (Coming Soon)
+4. Interact with the AI-powered patient simulator
+5. Receive feedback and improve your clinical skills
 
-## Learn More
+## Contributing
+We welcome contributions! Please follow these steps:
 
-To learn more about Next.js, take a look at the following resources:
+1. Fork the repository
+2. Create a feature branch
+```bash
+git checkout -b feature/AmazingFeature
+```
+3. Commit your changes
+```bash
+git commit -m 'Add some AmazingFeature'
+```
+4. Push to the branch
+```bash
+git push origin feature/AmazingFeature
+```
+5. Open a Pull Request
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Contact
+- Project Link: [https://github.com/yourusername/brightstart](https://github.com/yourusername/brightstart)
+- Developer Email: your.email@example.com
 
-## Deploy on Vercel
+## Acknowledgments
+- [Next.js](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Lucide Icons](https://lucide.dev/)
+- Medical professionals who provided valuable feedback
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Roadmap
+- [ ] Add more patient scenarios
+- [ ] Implement real-time collaboration
+- [ ] Enhance AI responses
+- [ ] Add mobile app support
+- [ ] Integrate with medical education systems
