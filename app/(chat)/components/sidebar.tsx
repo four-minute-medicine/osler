@@ -94,7 +94,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       </div>
 
       {/* History List */}
-      <div className="flex-grow overflow-auto">
+      <div className=" invisible flex-grow overflow-auto">
         <div className="mb-4 text-gray-600 text-sm font-medium">
           Last 7 days
         </div>
