@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import linkImage from './opengraph-image.jpg'
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -16,6 +17,19 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "BrightStart",
   description: " next app",
+  openGraph: {
+    title: "BrightStart",
+    description: "BrightStart",
+    siteName: "BrightStart",
+    images: [
+      {
+        url: './opengraph-image.jpg',
+
+      },
+    ],
+    locale: "en-US",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
