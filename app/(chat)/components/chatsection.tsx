@@ -22,7 +22,32 @@ const formatMessageForDisplay = (message: ConversationMessage | ApiMessage): Mes
   };
 };
 
-const MessageBubble: React.FC<{ message: MessageDisplay,title:string }> = ({ message,title }) => {  const formatContent = (content: string) => {
+const MessageBubble: React.FC<{ message: MessageDisplay, title: string, isLatestAssistant: boolean }> = ({ 
+  message, 
+  title, 
+  isLatestAssistant 
+}) => {
+  const [displayedContent, setDisplayedContent] = useState('');
+  const fullContent = message.content;
+  
+  useEffect(() => {
+    if (isLatestAssistant && message.type === 'assistant') {
+      let currentIndex = 0;
+      const intervalId = setInterval(() => {
+        if (currentIndex < fullContent.length) {
+          setDisplayedContent(fullContent.slice(0, currentIndex + 1));
+          currentIndex++;
+        } else {
+          clearInterval(intervalId);
+        }
+      }, 10); // Adjust typing speed here
+
+      return () => clearInterval(intervalId);
+    } else {
+      setDisplayedContent(fullContent);
+    }
+  }, [fullContent, isLatestAssistant]);
+  const formatContent = (content: string) => {
     return content.split('\n').map((line, index) => (
       <React.Fragment key={index}>
         {line}
@@ -30,14 +55,13 @@ const MessageBubble: React.FC<{ message: MessageDisplay,title:string }> = ({ mes
       </React.Fragment>
     ));
   };
+
   const c = { 'hcw': '#D1E4D1', 'parent': '#FFE5EC', 'virtualpatient': '#E0D7CE' }[title] || '#E0D7CE';
 
   if (message.type === 'hcw' || message.type ==='virtual_patient'|| message.type === 'student') {
     return (
       <div className="flex justify-end">
-        <div className="bg-[#FFE5EC] p-4 rounded-lg max-w-[85%]"             style={{
-              backgroundColor: c
-            }}>
+        <div className="bg-[#FFE5EC] p-4 rounded-lg max-w-[85%]" style={{ backgroundColor: c }}>
           <div className="flex items-center gap-2 text-black mb-2 font-bold text-[20px] font-helvetica">
             <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center">
               <CircleUser />
@@ -45,13 +69,12 @@ const MessageBubble: React.FC<{ message: MessageDisplay,title:string }> = ({ mes
             <span>Healthcare Worker</span>
           </div>
           <div className="text-black font-helvetica text-[20px] font-normal leading-[30px] text-left">
-            {message.content}  {/* Changed from user_prompt to message */}
+            {formatContent(displayedContent)}
           </div>
         </div>
       </div>
     );
-  }
-  else if (message.type === 'parent') {
+  } else if (message.type === 'parent') {
     return (
       <div className="flex justify-end">
         <div className="bg-[#FFE5EC] p-4 rounded-lg max-w-[85%]">
@@ -62,7 +85,7 @@ const MessageBubble: React.FC<{ message: MessageDisplay,title:string }> = ({ mes
             <span>Caregiver</span>
           </div>
           <div className="text-black font-helvetica text-[20px] font-normal leading-[30px] text-left">
-            {message.content}  {/* Changed from user_prompt to message */}
+            {formatContent(displayedContent)}
           </div>
         </div>
       </div>
@@ -71,12 +94,10 @@ const MessageBubble: React.FC<{ message: MessageDisplay,title:string }> = ({ mes
 
   return (
     <div className="text-black font-helvetica text-[20px] font-light italic leading-[30px] text-left">
-      {formatContent(message.content)}  {/* Changed from user_prompt to message */}
+      {formatContent(displayedContent)}
     </div>
   );
 };
-
-
 
 const ChatSection: React.FC<ChatSectionProps> = ({ 
   title = '',
@@ -85,6 +106,13 @@ const ChatSection: React.FC<ChatSectionProps> = ({
   isGeneratingCase = false
 }) => {
   const displayMessages = messages.map(msg => formatMessageForDisplay(msg));
+  const lastAssistantIndex = [...displayMessages]
+    .reverse()
+    .findIndex(msg => msg.type === 'assistant');
+  const latestAssistantIndex = lastAssistantIndex >= 0 ? 
+    displayMessages.length - 1 - lastAssistantIndex : 
+    -1;
+  
   const [inputValue, setInputValue] = useState('');
   const [isAiTyping, setIsAiTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -118,7 +146,12 @@ const ChatSection: React.FC<ChatSectionProps> = ({
         <div className="pt-20 px-8 pb-8"> 
           <div className="max-w-4xl mx-auto space-y-6">
             {displayMessages.map((message, index) => (
-              <MessageBubble message={message} key={index} title={title} />
+              <MessageBubble 
+                message={message} 
+                key={index} 
+                title={title}
+                isLatestAssistant={index === latestAssistantIndex}
+              />
             ))}
             {isAiTyping && (
               <div className="text-black italic">

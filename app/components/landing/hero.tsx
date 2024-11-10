@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import Navbar from '../navbar';
-import videoSource from '../../assets/ui_prototype.webm';
+import videoSource from '../../assets/brightstart_UI_video.webm';
 import Image from 'next/image';
 import vector from '../../assets/vector.png';
 

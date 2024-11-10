@@ -73,30 +73,34 @@ export default function ChatPage() {
 
   const handleSendMessage = async (message: string) => {
     if (!params.id) return;
-
+    
     // Immediately add user message to the UI
     const userMessage: Message = {
       user_type: 'student',
       message: message
     };
     setCurrentMessages(prev => [...prev, userMessage]);
-
+  
     try {
       const data: MessageResponse = await chatApi.hcw.continue(
         params.id as string,
         message
       );
       if (data.messages && data.messages.length > 0) {
-        // Filter out the user message from the response since we've already added it
+        // Add assistant messages with typing effect
         const assistantMessages = data.messages.filter(msg => msg.user_type === 'assistant');
-        setCurrentMessages(prev => [...prev, ...assistantMessages]);
+        assistantMessages.forEach(msg => {
+          setCurrentMessages(prev => [...prev, {
+            ...msg,
+            isTyping: true
+          }]);
+        });
       }
     } catch (error) {
       console.error('Error sending message:', error);
-      // Optionally remove the user message if the API call fails
-      // setCurrentMessages(prev => prev.slice(0, -1));
     }
   };
+  
 
   const handleNewCase = async () => {
     setIsGeneratingCase(true);
