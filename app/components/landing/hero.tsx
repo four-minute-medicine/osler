@@ -4,32 +4,39 @@ import Navbar from '../navbar';
 import videoSource from '../../assets/brightstart_UI_video.webm';
 import Image from 'next/image';
 import vector from '../../assets/vector.png';
+import { useRouter } from 'next/navigation';
 
 interface HeroSectionProps {
   className?: string;
 }
 
 const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
+  const router = useRouter();
+
   return (
     <div className={`relative w-full bg-[#F2F1E5] ${className}`}>
-      <div className="relative z-10">
-        <Navbar />
-        <div className="absolute right-28 top-6  w-[800px] h-[800px] opacity-[1] rotate-90 ">
-        <Image
-          src={vector}
-          alt="Background vector"
-          fill
-          style={{ objectFit: 'contain' }}
-          priority
-        />
+      {/* Vector background container with lower z-index */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute right-28 top-6 w-[800px] h-[800px] opacity-[1] rotate-90">
+          <Image
+            src={vector}
+            alt="Background vector"
+            fill
+            style={{ objectFit: 'contain' }}
+            priority
+          />
+        </div>
       </div>
 
+      {/* Content container with higher z-index */}
+      <div className="relative z-20">
+        <Navbar />
         {/* Hero Content */}
         <div className="max-w-[1600px] mx-auto pt-40 px-6">
           <div className="text-center mx-auto">
-            <h1 
+            <h1
               className="text-7xl md:text-8xl font-bold mb-8 text-black"
-              style={{ 
+              style={{
                 lineHeight: '1.1',
                 fontFamily: 'Inter, sans-serif'
               }}
@@ -41,10 +48,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
               fontWeight: '400',
               lineHeight: '1.5'
             }}>
-Start bright, stay bright with BrightStart. Empowering parents and healthcare workers to navigate child health related issues with confidence.            </p>
-
+              Start bright, stay bright with BrightStart. Empowering parents and healthcare workers to navigate child health related issues with confidence.
+            </p>
             <button
-              className="px-8 py-4 text-xl font-medium bg-[#FFEF89] text-black rounded-lg hover:bg-[#FFD84D] transition-all duration-300"
+              onClick={() => router.push('/welcome')}
+              className="relative z-30 px-8 py-4 text-xl font-medium bg-[#FFEF89] text-black rounded-lg hover:bg-[#FFD84D] transition-all duration-300"
             >
               Try Our Beta Now
             </button>

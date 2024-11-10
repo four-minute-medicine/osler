@@ -2,9 +2,11 @@
 import React from 'react';
 import Image from 'next/image';
 import vector from '../../assets/vector.png';
-import router from 'next/router';
+import { useRouter } from 'next/navigation';
 
 const GetStartedSection: React.FC = () => {
+  const router = useRouter();
+
   return (
     <section
       className="w-full min-h-screen py-32 pl-9 relative overflow-hidden bg-[#F2F1E5] z-0"
