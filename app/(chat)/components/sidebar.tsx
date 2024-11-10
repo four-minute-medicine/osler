@@ -62,7 +62,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           onClick={() => router.push('/')}
           className={`${balooBhai.className} text-black text-[30px] text-center font-bold leading-[25px] mb-6 w-full hover:opacity-80 transition-opacity`}
         >
-          Brightstart
+          BrightStart
         </button>
         
         <div className="flex gap-2 mb-4">

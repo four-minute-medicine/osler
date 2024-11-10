@@ -71,7 +71,7 @@
           {/* Welcome Text */}
           <div className="mb-16">
             <h1 className="text-5xl font-bold text-black mb-6">
-              Welcome to <span className={`${balooBhai.className} font-bold`}> Brightstart </span>
+              Welcome to <span className={`${balooBhai.className} font-bold`}> BrightStart </span>
             </h1>
             <p className="text-gray-800 text-lg max-w-4xl">
               Helping you build confidence, deepen your knowledge, and master caring for your patients.<br/><br/>
