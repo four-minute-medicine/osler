@@ -25,7 +25,7 @@ export interface ConversationMessage {
 }
 
 export interface ApiMessage {
-  user_type: 'student' | 'assistant';
+  user_type: 'student' | 'assistant' | 'parent';
   message: string;
 }
 
@@ -50,7 +50,7 @@ export interface CreateConversationResponse {
     isGeneratingCase?: boolean;
   }
   export interface Message {
-    user_type: 'student' | 'assistant';
+    user_type: 'student' | 'assistant' | 'parent';
     message: string;  // Changed from user_prompt to message
   }
   

@@ -4,8 +4,9 @@ import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import ChatSection from '../../components/chatsection';
 import Sidebar from '../../components/sidebar';
+
 interface Message {
-  user_type: 'student' | 'assistant';
+  user_type: 'student' | 'assistant'| 'parent';
   message: string;
 }
 
@@ -14,7 +15,7 @@ interface Conversation {
   title: string;
   messages: string[];
   user: string[];
-  __v: number;  
+  __v: number;
   timestamp: string;
 }
 
@@ -47,7 +48,6 @@ export default function ChatPage() {
         console.error('Error fetching conversations:', error);
       }
     };
-
     fetchConversations();
   }, []);
 
@@ -57,7 +57,6 @@ export default function ChatPage() {
       if (params.id) {
         try {
           const data = await chatApi.getConversationHistory(params.id as string);
-          // Map ConversationMessage to Message
           setCurrentMessages(
             data.messages.map((msg: ConversationMessage) => ({
               user_type: msg.user_type,
@@ -69,24 +68,33 @@ export default function ChatPage() {
         }
       }
     };
-
     fetchMessages();
   }, [params.id]);
 
   const handleSendMessage = async (message: string) => {
     if (!params.id) return;
 
+    // Immediately add user message to the UI
+    const userMessage: Message = {
+      user_type: 'student',
+      message: message
+    };
+    setCurrentMessages(prev => [...prev, userMessage]);
+
     try {
       const data: MessageResponse = await chatApi.hcw.continue(
         params.id as string,
         message
       );
-
       if (data.messages && data.messages.length > 0) {
-        setCurrentMessages((prev) => [...prev, ...data.messages]);
+        // Filter out the user message from the response since we've already added it
+        const assistantMessages = data.messages.filter(msg => msg.user_type === 'assistant');
+        setCurrentMessages(prev => [...prev, ...assistantMessages]);
       }
     } catch (error) {
       console.error('Error sending message:', error);
+      // Optionally remove the user message if the API call fails
+      // setCurrentMessages(prev => prev.slice(0, -1));
     }
   };
 
@@ -96,7 +104,6 @@ export default function ChatPage() {
       const data = await chatApi.hcw.create('ready');
       if (data.conversationId) {
         router.push(`/hcw/${data.conversationId}`);
-        // Refresh conversations list
         const updatedData = await chatApi.getConversations();
         setConversations(updatedData.conversations);
       }
@@ -121,7 +128,7 @@ export default function ChatPage() {
         activeConversationId={params.id as string}
       />
       <ChatSection
-        title = 'hcw'
+        title='hcw'
         messages={messages}
         onSendMessage={handleSendMessage}
         onNewCase={handleNewCase}

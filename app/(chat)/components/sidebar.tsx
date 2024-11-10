@@ -9,7 +9,6 @@ const balooBhai = Baloo_Bhai_2({ subsets: ['latin'] });
 
 const Sidebar: React.FC<SidebarProps> = ({
   conversations,
-  onNewSession,
   onSearch,
   colour,
   onSelectConversation,
@@ -48,6 +47,10 @@ const Sidebar: React.FC<SidebarProps> = ({
       recentConversations
     };
   };
+  const handleNewSession = () => {
+    router.push('/welcome');
+  };
+  
 
   const { todayConversations, recentConversations } = filterConversationsByDate(conversations);
   
@@ -64,7 +67,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         
         <div className="flex gap-2 mb-4">
           <button 
-            onClick={onNewSession}
+            onClick={handleNewSession}
             className="flex items-center gap-2 bg-[#FFE27D] text-black px-4 py-3 rounded-lg w-full hover:bg-[#FFD84D] transition-all duration-300"
           >
             <Plus className="w-4 h-4" />
