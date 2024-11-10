@@ -16,7 +16,7 @@
         className="bg-opacity-20 px-8 py-4 rounded-lg mb-6 w-full text-center text-black transition-colors"
         style={{
           backgroundColor:
-            title === "PARENT CHAT" ? "#FFE4E4" :
+            title === "CAREGIVER CHAT" ? "#FFE4E4" :
             title === "HCW QUERY" ? "#D1E4D1" :
             "#E5DDD3"
         }}
@@ -46,27 +46,27 @@
 
     const studyModes = [
       {
-        title: "PARENT CHAT",
-        description: "Need practice identifying your knowledge gap? Generate Patient scenarios and put your knowledge to the test.",
+        title: "CAREGIVER CHAT",
+        description: "If you are a parent who is confused or has a question relating to your child and the Road to Health Book? The ‘Parent Chat’ is for you.",
         href: "/parent",
         disabled: false
       },
       {
         title: "HCW QUERY",
-        description: "Stuck looking for an answer? Ask any question related to the material, and I'll even link it to the material",
+        description: "HCW query helps Healthcare workers query government and hospital based child health guidelines",
         href: '/hcw',
         disabled: false
       },
       {
         title: "VIRTUAL PATIENT CASES",
-        description: "Don't understand a section in the material? Paste in or reference a section to explain it better.",
+        description: "Healthcare workers and trainees can use this scenario based learning tool to build diagnostic skills and confidence",
         href: '/virtual-patient',
         disabled: false
       }
     ];
 
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center w-screen justify-center">
         <div className="max-w-6xl w-full px-8">
           {/* Welcome Text */}
           <div className="mb-16">
@@ -74,7 +74,7 @@
               Welcome to <span className={`${balooBhai.className} font-bold`}> Brightstart </span>
             </h1>
             <p className="text-gray-800 text-lg max-w-4xl">
-              We are dedicated to providing parents and healthcare workers with quick, easy access to government resources while helping healthcare workers build knowledge and confidence in child care.<br/><br/>
+              Helping you build confidence, deepen your knowledge, and master caring for your patients.<br/><br/>
               Select on the below to get started!
             </p>
           </div>

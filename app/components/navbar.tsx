@@ -13,7 +13,7 @@ const Navbar: React.FC = () => {
       <div
         className="absolute inset-0"
         style={{
-          backgroundColor: '#FDFBF7',  // Exact match with the page background
+          backgroundColor: '#F2F1E5',  // Exact match with the page background
           backdropFilter: 'blur(4px)'  // Light blur for non-matching sections
         }}
       />
@@ -25,7 +25,7 @@ const Navbar: React.FC = () => {
               onClick={() => router.push('/')}
               style={{
                 fontSize: '30px',
-                fontWeight: 400,
+                fontWeight: 700,
                 lineHeight: '25px',
                 textAlign: 'center',
                 textUnderlinePosition: 'from-font',

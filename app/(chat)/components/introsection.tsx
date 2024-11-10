@@ -12,9 +12,10 @@ interface ChatViewProps {
   unHighlightedWord?:string;
   discription:string;
   colour:string;
+  subtext?:string;
 }
 
-const IntroSection: React.FC<ChatViewProps> = ({ highlightedWord = 'Parent',unHighlightedWord ,colour, discription,chat='parent'}) => {
+const IntroSection: React.FC<ChatViewProps> = ({ highlightedWord = 'Parent',unHighlightedWord ,colour, discription,chat='parent',subtext}) => {
   const [question, setQuestion] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -27,7 +28,7 @@ const IntroSection: React.FC<ChatViewProps> = ({ highlightedWord = 'Parent',unHi
     try {
       const response = await chatApi.createConversation(chat ,question);
       if (response.conversationId) {
-        router.push(`/${highlightedWord}/${response.conversationId}`);
+        router.push(`/${chat}/${response.conversationId}`);
       }
     } catch (error) {
       console.error('Error creating conversation:', error);
@@ -37,7 +38,7 @@ const IntroSection: React.FC<ChatViewProps> = ({ highlightedWord = 'Parent',unHi
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-16 w-screen">
+    <div className="min-h-screen flex flex-col items-center justify-center  w-screen">
       {/* Header Section */}
       <div className="text-center mb-12 text-black">
         <h1 className={`${balooBhai.className} text-8xl font-bold mb-6 flex items-center justify-center gap-2`}>
@@ -50,6 +51,11 @@ const IntroSection: React.FC<ChatViewProps> = ({ highlightedWord = 'Parent',unHi
           <p className="text-2xl">
             {discription}
           </p>
+          {subtext ? (
+          <p ><br/>{subtext}</p>
+        ) : (
+          <p className="text-2xl">Start a Case now by typing <strong>START</strong> and pressing <strong>ENTER</strong></p>
+        )}
         </div>
       </div>
 

@@ -63,7 +63,7 @@ export default function Welcome() {
         onSelectConversation={handleSelectConversation}
         activeConversationId=''
       />
-      <IntroSection highlightedWord='HCW' unHighlightedWord='Chat' colour='#D1E4D1' discription="Helps healthcare workers (HCWs) find the information they are looking for whilst in the flow of work"/>
+      <IntroSection highlightedWord='HCW' subtext='E.g. What do I need to to do if a child presents with [symptom]?' unHighlightedWord='Chat' colour='#D1E4D1' discription="Helps healthcare workers (HCWs) find the information they are looking for whilst in the flow of work"/>
     </div>
   );
 }

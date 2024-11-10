@@ -60,7 +60,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       <div className="mb-8">
         <button 
           onClick={() => router.push('/')}
-          className={`${balooBhai.className} text-black text-[30px] text-center font-normal leading-[25px] mb-6 w-full hover:opacity-80 transition-opacity`}
+          className={`${balooBhai.className} text-black text-[30px] text-center font-bold leading-[25px] mb-6 w-full hover:opacity-80 transition-opacity`}
         >
           Brightstart
         </button>

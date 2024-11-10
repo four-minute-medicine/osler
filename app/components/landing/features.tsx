@@ -33,25 +33,25 @@ const features = [
     id: 'parent-queries',
     title: 'Parent Queries',
     description: 'Easily ask your medical questions and find crucial information from the Road to Health Book.',
-    bgColor: '#FFE5EC'
+    bgColor: '#F3DCE8'
   },
   {
     id: 'healthcare-workers',
     title: 'Healthcare Workers Queries',
     description: 'Quickly access and reference both the Child Road to Health Book and IMCI guidelines and make informed decisions with AI-powered insights.',
-    bgColor: '#E5F4F0'
+    bgColor: '#BDD3C5'
   },
   {
     id: 'training',
     title: 'Training',
     description: 'Benefit from AI-driven patient simulations to hone your skills in early childhood health.',
-    bgColor: '#F0EBE5'
+    bgColor: '#E0D7CE'
   }
 ];
 
 const FeaturesSection: React.FC = () => {
   return (
-    <section className="w-full py-32 relative bg-[#FDFBF7] overflow-hidden">
+    <section className="w-full py-32 relative bg-[#F2F1E5] overflow-hidden">
       {/* Container to control background elements */}
       <div className="absolute inset-0 z-0">
         {/* Background Vector */}

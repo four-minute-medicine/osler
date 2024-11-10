@@ -3,7 +3,7 @@ import React from 'react';
 
 const SolutionSection: React.FC = () => {
   return (
-    <section className="w-full pt-10 min-h-screen relative bg-[#FDFBF7] overflow-hidden">
+    <section className="w-full pt-10 min-h-screen relative bg-[#F2F1E5] overflow-hidden">
 
       {/* Content with higher z-index */}
       <div className="relative z-[1] mx-auto pl-9 py-32">

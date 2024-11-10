@@ -11,7 +11,7 @@ interface HeroSectionProps {
 
 const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
   return (
-    <div className={`relative w-full bg-[#FDFBF7] ${className}`}>
+    <div className={`relative w-full bg-[#F2F1E5] ${className}`}>
       <div className="relative z-10">
         <Navbar />
         <div className="absolute right-28 top-6  w-[800px] h-[800px] opacity-[1] rotate-90 ">

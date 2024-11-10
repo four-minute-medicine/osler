@@ -1,6 +1,7 @@
 import { ConversationResponse, CreateConversationResponse, HistoryConversation, MessageResponse } from "../(chat)/types/chat";
 
-const API_BASE_URL = 'https://fourmm-llama-hackathon-backend.onrender.com/api';
+// const API_BASE_URL = 'https://fourmm-llama-hackathon-backend.onrender.com/api';
+const API_BASE_URL = 'http://localhost:5005/api';
 
 export type ConversationType = 'parent' | 'hcw' | 'virtual-patient';
 

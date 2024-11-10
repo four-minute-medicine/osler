@@ -64,7 +64,7 @@ export default function Welcome() {
         onSelectConversation={handleSelectConversation}
         activeConversationId=''
       />
-      <IntroSection highlightedWord=' VIRTUAL PATIENT' chat='virtual-patient' unHighlightedWord='CASES' colour='#E0D7CE' discription=' scenario-based learning tool helps healthcare workers build childcare related diagnostic and communication skills  with confidence'/>
+      <IntroSection highlightedWord=' VIRTUAL PATIENT' chat='virtual-patient' unHighlightedWord='CASES' colour='#E0D7CE' discription='Put your knowledge to the test with a real-world scenario.'/>
     </div>
   );
 }

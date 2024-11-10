@@ -6,7 +6,7 @@ import { ApiMessage, ChatSectionProps, ConversationMessage } from '../types/chat
 
 interface MessageDisplay {
   content: string;
-  type: 'student' | 'assistant' | 'parent';
+  type: 'student' | 'assistant' | 'parent'| 'hcw' |'virtual_patient';
 }
 
 const formatMessageForDisplay = (message: ConversationMessage | ApiMessage): MessageDisplay => {
@@ -30,9 +30,9 @@ const MessageBubble: React.FC<{ message: MessageDisplay,title:string }> = ({ mes
       </React.Fragment>
     ));
   };
-  const c = ((title == 'hcw') ? '#D1E4D1' : '#E0D7CE');
+  const c = { 'hcw': '#D1E4D1', 'parent': '#FFE5EC', 'virtualpatient': '#E0D7CE' }[title] || '#E0D7CE';
 
-  if (message.type === 'student') {
+  if (message.type === 'hcw' || message.type ==='virtual_patient'|| message.type === 'student') {
     return (
       <div className="flex justify-end">
         <div className="bg-[#FFE5EC] p-4 rounded-lg max-w-[85%]"             style={{
@@ -42,7 +42,7 @@ const MessageBubble: React.FC<{ message: MessageDisplay,title:string }> = ({ mes
             <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center">
               <CircleUser />
             </div>
-            <span>Student</span>
+            <span>Healthcare Worker</span>
           </div>
           <div className="text-black font-helvetica text-[20px] font-normal leading-[30px] text-left">
             {message.content}  {/* Changed from user_prompt to message */}
@@ -59,7 +59,7 @@ const MessageBubble: React.FC<{ message: MessageDisplay,title:string }> = ({ mes
             <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center">
               <CircleUser />
             </div>
-            <span>Student</span>
+            <span>Caregiver</span>
           </div>
           <div className="text-black font-helvetica text-[20px] font-normal leading-[30px] text-left">
             {message.content}  {/* Changed from user_prompt to message */}
