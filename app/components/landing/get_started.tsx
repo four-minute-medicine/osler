@@ -2,7 +2,6 @@
 import React from 'react';
 import Image from 'next/image';
 import vector from '../../assets/vector.png';
-import Footer from '../footer';
 import router from 'next/router';
 
 const GetStartedSection: React.FC = () => {
@@ -58,7 +57,6 @@ const GetStartedSection: React.FC = () => {
         </div>
       </div>
 
-      <Footer />
     </section>
   );
 };
