@@ -104,10 +104,6 @@ git push origin feature/AmazingFeature
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Contact
-- Project Link: [https://github.com/yourusername/brightstart](https://github.com/yourusername/brightstart)
-- Developer Email: your.email@example.com
-
 ## Acknowledgments
 - [Next.js](https://nextjs.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
