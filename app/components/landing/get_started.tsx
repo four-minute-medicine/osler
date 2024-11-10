@@ -44,7 +44,7 @@ const GetStartedSection: React.FC = () => {
                 lineHeight: '1.2'
               }}
             >
-              Ask your query or test your knowledge Brightstart
+              Ask your query or test your knowledge BrightStart
             </h2>
 
             <button 
